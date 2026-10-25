@@ -149,7 +149,7 @@
             </div>
         </section>
 
-        <!-- Official Map Section (Updated with Official Map Image) -->
+        <!-- Official Map Section -->
         <section id="map-section" class="glass-panel rounded-2xl p-4 lg:p-6 shadow-2xl relative overflow-hidden space-y-4">
             <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
@@ -764,7 +764,7 @@
                     </div>
                     <h3 class="font-bold text-white text-base">Digital Booking & Email</h3>
                     <div class="space-y-1.5 text-xs text-gray-300">
-                        <p><strong class="text-white">Official Booking Portal:</strong><br><a href="https://mytadoba.mahaforest.gov.in/touristhub-wildlifesafaris" target="_blank" class="text-amber-400 hover:underline">mytadoba.mahaforest.gov.in</a></p>
+                        <p><strong class="text-white">Official Booking Portal:</strong><br><a href="https://mytadoba.org" target="_blank" class="text-amber-400 hover:underline">mytadoba.org</a></p>
                         <p><strong class="text-white">Email:</strong><br><span class="text-gray-300">fd.tatr@mahaforest.gov.in</span></p>
                     </div>
                 </div>
@@ -777,7 +777,7 @@
     <footer class="mt-12 border-t border-white/10 glass-panel py-6 text-center text-xs text-gray-400">
         <div class="max-w-7xl mx-auto px-4 space-y-2">
             <p>© 2026 Tadoba Andhari Tiger Reserve Visitor Guide. Map layout structured directly from official field cartography.</p>
-            <p class="text-gray-500">Always confirm booking permits through the official Maharashtra Forest Department portal (mytadoba.mahaforest.gov.in).</p>
+            <p class="text-gray-500">Always confirm booking permits through the official Maharashtra Forest Department portal (mytadoba.org).</p>
         </div>
     </footer>
 
@@ -844,9 +844,10 @@
                 category: 'tracks',
                 title: 'Male vs. Female Tiger Pugmarks',
                 badge: 'Sex Identification Guide',
-                desc: '• **Male Tiger:** The pugmark is squarish in shape. The width equals or closely matches its length (~12–14 cm), with broader, rounded heel pads and thicker toe impressions.\n\n• **Female Tiger:** The pugmark tends to be more rectangular or longer than it is wide (~10–12 cm), featuring more oval or teardrop-shaped toes and a compact heel pad.',
+                desc: '• <strong>Male Tiger:</strong> The pugmark is squarish in shape. The width equals or closely matches its length (~12–14 cm), with broader, rounded heel pads and thicker toe impressions.<br><br>• <strong>Female Tiger:</strong> The pugmark tends to be more rectangular or longer than it is wide (~10–12 cm), featuring more oval or teardrop-shaped toes and a compact heel pad.',
                 icon: 'fa-paw text-amber-400',
-                hasImages: true // Placeholder flag for future image drop-in
+                hasImages: true,
+                pugmarkImg: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzt3R4HhDbewUj-c_NxlT4oRy5zFq9TKok2-Me9ikUv3ARA5wEryFJqJje&s=10'
             },
             {
                 id: 'note-5',
@@ -861,7 +862,7 @@
                 category: 'etiquette',
                 title: 'Strict Jungle Etiquette Rules',
                 badge: 'Park Regulations',
-                desc: '1. Keep voices down to a quiet whisper.\n2. Do not stand up or lean out of the Gypsy vehicle.\n3. Flash photography is strictly prohibited.\n4. Zero littering - take all waste back with you.',
+                desc: '1. Keep voices down to a quiet whisper.<br>2. Do not stand up or lean out of the Gypsy vehicle.<br>3. Flash photography is strictly prohibited.<br>4. Zero littering - take all waste back with you.',
                 icon: 'fa-shield-halved text-emerald-400'
             }
         ];
@@ -888,7 +889,7 @@
         }
 
         function renderEcoNotes(category) {
-            const container = document.getElementById('eco-notes-container');
+            const container = document.getElementById('econotes-section').querySelector('.grid');
             if (!container) return;
             container.innerHTML = '';
 
@@ -918,22 +919,14 @@
                     `;
                 }
 
-                // Image Placeholders for Male vs Female Pugmark Card
+                // Image for Male vs Female Pugmark Card
                 if (note.hasImages) {
                     extraContentHTML += `
-                        <div class="mt-3 pt-3 border-t border-white/10 grid grid-cols-2 gap-3">
+                        <div class="mt-3 pt-3 border-t border-white/10">
                             <div class="bg-slate-950/60 rounded-lg p-2 border border-white/10 text-center space-y-1">
-                                <span class="text-[10px] text-amber-400 font-bold uppercase block">Male Pugmark</span>
-                                <div class="h-28 bg-slate-900 rounded border border-dashed border-white/20 flex flex-col items-center justify-center text-gray-500 text-[11px] p-2">
-                                    <i class="fa-solid fa-image text-lg mb-1"></i>
-                                    <span>[Drop Male Image Here]</span>
-                                </div>
-                            </div>
-                            <div class="bg-slate-950/60 rounded-lg p-2 border border-white/10 text-center space-y-1">
-                                <span class="text-[10px] text-amber-400 font-bold uppercase block">Female Pugmark</span>
-                                <div class="h-28 bg-slate-900 rounded border border-dashed border-white/20 flex flex-col items-center justify-center text-gray-500 text-[11px] p-2">
-                                    <i class="fa-solid fa-image text-lg mb-1"></i>
-                                    <span>[Drop Female Image Here]</span>
+                                <span class="text-[10px] text-amber-400 font-bold uppercase block">Male & Female Pugmark Reference Guide</span>
+                                <div class="h-44 bg-slate-900 rounded border border-white/20 overflow-hidden flex items-center justify-center p-1">
+                                    <img src="${note.pugmarkImg}" alt="Male and Female Tiger Pugmarks" class="w-full h-full object-contain">
                                 </div>
                             </div>
                         </div>
@@ -951,7 +944,7 @@
                                 ${note.badge}
                             </span>
                         </div>
-                        <p class="text-xs text-gray-300 leading-relaxed whitespace-pre-line">${note.desc}</p>
+                        <p class="text-xs text-gray-300 leading-relaxed">${note.desc}</p>
                     </div>
                     ${extraContentHTML}
                 `;
@@ -1117,7 +1110,7 @@
         function bookingAlert() {
             showToast("Redirecting to Official MahaForest Booking Portal...");
             setTimeout(() => {
-                window.open('https://mytadoba.mahaforest.gov.in', '_blank');
+                window.open('https://mytadoba.org', '_blank');
             }, 1200);
         }
 
