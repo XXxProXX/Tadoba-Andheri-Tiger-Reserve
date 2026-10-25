@@ -102,9 +102,9 @@
                 <a href="#map-section" class="hover:text-amber-400 transition-colors"><i class="fa-solid fa-map-marked-alt mr-1"></i> Reserve Map</a>
                 <a href="#seasons" class="hover:text-amber-400 transition-colors"><i class="fa-solid fa-cloud-sun mr-1"></i> Seasons</a>
                 <a href="#wildlife" class="hover:text-amber-400 transition-colors"><i class="fa-solid fa-paw mr-1"></i> Wildlife Showcase</a>
-                <button onclick="toggleEcoDrawer()" class="hover:text-amber-400 transition-colors text-amber-300 flex items-center gap-1 font-semibold">
-                    <i class="fa-solid fa-book-open text-amber-400"></i> Eco-Notes
-                </button>
+                <a href="#econotes-section" class="hover:text-amber-400 transition-colors text-amber-300 flex items-center gap-1 font-semibold">
+                    <i class="fa-solid fa-book-open text-amber-400"></i> Eco-Notes & Calls
+                </a>
                 <a href="#calculator" class="hover:text-amber-400 transition-colors"><i class="fa-solid fa-calculator mr-1"></i> Cost Calculator</a>
                 <a href="#checklist" class="hover:text-amber-400 transition-colors"><i class="fa-solid fa-clipboard-check mr-1"></i> Packing Guide</a>
                 <a href="#timings" class="hover:text-amber-400 transition-colors"><i class="fa-solid fa-clock mr-1"></i> Timings</a>
@@ -345,7 +345,7 @@
                         <circle cx="260" cy="215" r="4" fill="#f59e0b"/>
                     </g>
 
-                    <!-- GATES & SECTOR INTERACTIVE NODES (CLEAN SINGLE LAYER) -->
+                    <!-- GATES & SECTOR INTERACTIVE NODES -->
 
                     <!-- NORTH SECTOR GATES -->
                     <g class="map-node node-kolara" onclick="selectGate('navegaon')" data-gate="navegaon">
@@ -534,10 +534,7 @@
                     <p class="text-xs text-gray-400 mt-1">Key flagship species found across Tadoba's diverse ecosystems, hot zones, and sighting tips.</p>
                 </div>
                 <div class="flex items-center gap-2">
-                    <button onclick="toggleEcoDrawer()" class="bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 border border-amber-500/40 px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-2 transition-all">
-                        <i class="fa-solid fa-binoculars text-amber-400"></i> Open Tracking & Sightings Guide
-                    </button>
-                    <span class="text-xs bg-emerald-500/10 text-emerald-300 border border-emerald-500/30 px-3 py-1.5 rounded-lg hidden sm:flex items-center gap-2">
+                    <span class="text-xs bg-emerald-500/10 text-emerald-300 border border-emerald-500/30 px-3 py-1.5 rounded-lg flex items-center gap-2">
                         <i class="fa-solid fa-shield-cat"></i> High Sighting Frequency
                     </span>
                 </div>
@@ -676,6 +673,39 @@
                     </div>
                 </div>
 
+            </div>
+        </section>
+
+        <!-- INTEGRATED ECO-NOTES & ANIMAL ALARM CALLS SECTION (Embedded directly on Page) -->
+        <section id="econotes-section" class="glass-panel rounded-2xl p-6 lg:p-8 space-y-6">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                    <h2 class="text-xl lg:text-2xl font-extrabold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-binoculars text-amber-400"></i> Tracking & Eco-Notes Guide
+                    </h2>
+                    <p class="text-xs text-gray-400 mt-1">Listen to actual animal alarm calls, learn pugmark identification techniques, and review jungle etiquette.</p>
+                </div>
+                
+                <!-- Category Tab Buttons -->
+                <div class="flex flex-wrap items-center gap-2 bg-slate-950/60 p-1.5 rounded-xl border border-white/10 self-start md:self-auto">
+                    <button onclick="filterEcoNotes('all')" id="eco-tab-all" class="eco-tab active px-3 py-1.5 rounded-lg text-xs font-semibold bg-amber-500 text-slate-950 transition-all">
+                        All Notes
+                    </button>
+                    <button onclick="filterEcoNotes('calls')" id="eco-tab-calls" class="eco-tab px-3 py-1.5 rounded-lg text-xs font-semibold text-gray-300 hover:text-white transition-all">
+                        <i class="fa-solid fa-volume-high text-amber-400 mr-1"></i> Alarm Calls
+                    </button>
+                    <button onclick="filterEcoNotes('tracks')" id="eco-tab-tracks" class="eco-tab px-3 py-1.5 rounded-lg text-xs font-semibold text-gray-300 hover:text-white transition-all">
+                        <i class="fa-solid fa-paw text-amber-400 mr-1"></i> Tracks & Scat
+                    </button>
+                    <button onclick="filterEcoNotes('etiquette')" id="eco-tab-etiquette" class="eco-tab px-3 py-1.5 rounded-lg text-xs font-semibold text-gray-300 hover:text-white transition-all">
+                        <i class="fa-solid fa-shield-halved text-emerald-400 mr-1"></i> Park Etiquette
+                    </button>
+                </div>
+            </div>
+
+            <!-- Embedded Grid Container -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5" id="eco-notes-container">
+                <!-- Rendered dynamically -->
             </div>
         </section>
 
@@ -1049,54 +1079,6 @@
         </div>
     </footer>
 
-    <!-- Interactive Sightings & Eco-Notes Slide-Over Drawer -->
-    <div id="eco-drawer-backdrop" onclick="toggleEcoDrawer()" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 opacity-0 pointer-events-none transition-opacity duration-300"></div>
-    <aside id="eco-drawer" class="fixed top-0 right-0 h-full w-full max-w-md bg-slate-900 border-l border-amber-500/30 z-50 transform translate-x-full transition-transform duration-300 flex flex-col shadow-2xl">
-        <!-- Drawer Header -->
-        <div class="p-5 border-b border-white/10 flex items-center justify-between bg-slate-950/80">
-            <div class="flex items-center gap-2.5">
-                <div class="w-9 h-9 rounded-lg bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400 font-bold">
-                    <i class="fa-solid fa-binoculars"></i>
-                </div>
-                <div>
-                    <h3 class="font-extrabold text-white text-base">Tracking & Eco-Notes</h3>
-                    <p class="text-[11px] text-amber-400/90 font-medium">Jungle Signs, Calls & Safari Etiquette</p>
-                </div>
-            </div>
-            <button onclick="toggleEcoDrawer()" class="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white flex items-center justify-center border border-white/10 transition-colors">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-        </div>
-
-        <!-- Category Filters -->
-        <div class="p-4 border-b border-white/10 bg-slate-950/40 flex gap-2 overflow-x-auto">
-            <button onclick="filterEcoNotes('all')" id="eco-tab-all" class="eco-tab active px-3 py-1.5 rounded-lg text-xs font-semibold bg-amber-500 text-slate-950 shrink-0 transition-all">
-                All Notes
-            </button>
-            <button onclick="filterEcoNotes('calls')" id="eco-tab-calls" class="eco-tab px-3 py-1.5 rounded-lg text-xs font-semibold text-gray-400 hover:text-white shrink-0 transition-all">
-                <i class="fa-solid fa-volume-high text-amber-400 mr-1"></i> Alarm Calls
-            </button>
-            <button onclick="filterEcoNotes('tracks')" id="eco-tab-tracks" class="eco-tab px-3 py-1.5 rounded-lg text-xs font-semibold text-gray-400 hover:text-white shrink-0 transition-all">
-                <i class="fa-solid fa-paw text-amber-400 mr-1"></i> Tracks & Scat
-            </button>
-            <button onclick="filterEcoNotes('etiquette')" id="eco-tab-etiquette" class="eco-tab px-3 py-1.5 rounded-lg text-xs font-semibold text-gray-400 hover:text-white shrink-0 transition-all">
-                <i class="fa-solid fa-shield-halved text-emerald-400 mr-1"></i> Etiquette
-            </button>
-        </div>
-
-        <!-- Drawer Body Content -->
-        <div class="flex-1 overflow-y-auto p-5 space-y-4" id="eco-notes-container">
-            <!-- Rendered dynamically -->
-        </div>
-
-        <!-- Drawer Footer -->
-        <div class="p-4 border-t border-white/10 bg-slate-950/80 text-center">
-            <p class="text-[11px] text-gray-400">
-                <i class="fa-solid fa-leaf text-emerald-400 mr-1"></i> Respect wildlife by maintaining silence and remaining inside your vehicle at all times.
-            </p>
-        </div>
-    </aside>
-
     <!-- Notification Toast Modal -->
     <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 glass-panel border border-amber-500/40 p-4 rounded-xl shadow-2xl flex items-center gap-3 max-w-sm">
         <i class="fa-solid fa-circle-info text-amber-400 text-xl"></i>
@@ -1242,7 +1224,7 @@
             { id: 'item-6', label: 'Dust Mask / Scarf & Refillable Water Bottle', sub: 'Keeps out jungle road dust and keeps you hydrated.', checked: false }
         ];
 
-        // Eco-Notes Data for Tracking & Etiquette Drawer (With Sound Effects Added)
+        // Eco-Notes Data for Tracking & Etiquette (With Audio Sound Effect Links)
         const ecoNotesData = [
             {
                 id: 'note-1',
@@ -1306,33 +1288,16 @@
             selectGate('moharli');
         });
 
-        // Drawer Toggle Functionality
-        function toggleEcoDrawer() {
-            const drawer = document.getElementById('eco-drawer');
-            const backdrop = document.getElementById('eco-drawer-backdrop');
-            
-            const isOpen = !drawer.classList.contains('translate-x-full');
-            if (isOpen) {
-                drawer.classList.add('translate-x-full');
-                backdrop.classList.add('opacity-0', 'pointer-events-none');
-                backdrop.classList.remove('opacity-100');
-            } else {
-                drawer.classList.remove('translate-x-full');
-                backdrop.classList.remove('opacity-0', 'pointer-events-none');
-                backdrop.classList.add('opacity-100');
-            }
-        }
-
-        // Filter and Render Eco Notes inside Drawer
+        // Filter and Render Eco Notes Grid
         function filterEcoNotes(category) {
             document.querySelectorAll('.eco-tab').forEach(tab => {
                 tab.classList.remove('bg-amber-500', 'text-slate-950');
-                tab.classList.add('text-gray-400');
+                tab.classList.add('text-gray-300');
             });
             const activeTab = document.getElementById(`eco-tab-${category}`);
             if (activeTab) {
                 activeTab.classList.add('bg-amber-500', 'text-slate-950');
-                activeTab.classList.remove('text-gray-400');
+                activeTab.classList.remove('text-gray-300');
             }
             renderEcoNotes(category);
         }
@@ -1348,16 +1313,16 @@
 
             filtered.forEach(note => {
                 const card = document.createElement('div');
-                card.className = 'glass-card p-4 rounded-xl border border-white/10 space-y-2 relative';
+                card.className = 'glass-card p-5 rounded-xl border border-white/10 hover:border-amber-500/30 transition-all flex flex-col justify-between space-y-3';
                 
                 let audioPlayerHTML = '';
                 if (note.audioUrl) {
                     audioPlayerHTML = `
-                        <div class="mt-3 pt-2.5 border-t border-white/5 flex flex-col gap-1.5">
-                            <span class="text-[10px] text-amber-400 font-semibold flex items-center gap-1">
+                        <div class="mt-3 pt-3 border-t border-white/10 flex flex-col gap-1.5">
+                            <span class="text-xs text-amber-400 font-semibold flex items-center gap-1.5">
                                 <i class="fa-solid fa-headphones"></i> Listen to Alarm Call Audio:
                             </span>
-                            <audio controls preload="none" class="w-full h-8 accent-amber-500">
+                            <audio controls preload="none" class="w-full h-9 accent-amber-500">
                                 <source src="${note.audioUrl}" type="audio/mpeg">
                                 <source src="${note.audioUrl}" type="audio/wav">
                                 Your browser does not support the audio element.
@@ -1367,16 +1332,18 @@
                 }
 
                 card.innerHTML = `
-                    <div class="flex items-center justify-between gap-2">
-                        <div class="flex items-center gap-2">
-                            <i class="fa-solid ${note.icon} text-sm"></i>
-                            <h4 class="text-xs font-bold text-white">${note.title}</h4>
+                    <div class="space-y-2">
+                        <div class="flex items-center justify-between gap-2">
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid ${note.icon} text-base"></i>
+                                <h4 class="text-sm font-bold text-white">${note.title}</h4>
+                            </div>
+                            <span class="text-[10px] font-semibold px-2 py-0.5 rounded bg-amber-500/10 text-amber-300 border border-amber-500/20 shrink-0">
+                                ${note.badge}
+                            </span>
                         </div>
-                        <span class="text-[9px] font-semibold px-2 py-0.5 rounded bg-amber-500/10 text-amber-300 border border-amber-500/20 shrink-0">
-                            ${note.badge}
-                        </span>
+                        <p class="text-xs text-gray-300 leading-relaxed whitespace-pre-line">${note.desc}</p>
                     </div>
-                    <p class="text-[11px] text-gray-300 leading-relaxed whitespace-pre-line">${note.desc}</p>
                     ${audioPlayerHTML}
                 `;
                 container.appendChild(card);
